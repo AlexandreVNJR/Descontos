@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Avaliativa</title>
+</head>
+<body>
+    Salário : <input type="text" id="input_sal"> <br>
+
+    Adicional mensal: <input type="text" id="input_admen"> <br>
+    
+    Bonus do usuário: <input type="text" id="input_bonus"> <br>
+    
+    <button onclick="analise()">Analisar Minha Renda</button>
+
+    <div id="div_money"></div> <br>
+    <div id="div_2"></div>
+</body>
+</html>
+
+<script>
+    function analise(){
+        var salario = Number(input_sal.value);
+        var admen = Number(input_admen.value);
+        var bonus = Number(input_bonus.value);
+        var salBruto = salario + admen + bonus;
+        var INSS = salBruto * 0.10;
+        var FGTS = salBruto * 0.08;
+        var desconto = 0
+        
+        if(salBruto>=10000){
+            var IR = salBruto * 0.125   ;
+
+            
+            var descontosemIR =  INSS + FGTS;
+            var desconto = descontosemIR + IR;
+            var liq = salBruto - desconto;
+            
+        }else{
+            var desconto = INSS + FGTS;
+             var IR = `Não aplicado` 
+            
+             var liq = salBruto - desconto;
+        }
+
+
+        div_money.innerHTML = `ANÁLISE DA SUA RENDA <br>
+
+Com o salário de R$${salario}, com adicional de R$${admen} e bônus de R$${bonus}, você tem: <br> <br>
+
+Bruto: R$${salBruto}  <br>
+
+IR: R$${IR}  <br>
+
+INSS: R$${INSS} <br> 
+
+FGTS: R$${FGTS} <br>
+
+Líquido: R$${liq} `
+
+    if(liq>2500){
+
+        var liq15 = liq * 0.15;
+        var liq15_1 = liq15 * 12;
+
+        div_money.innerHTML += `<br> Com a renda de R$${liq}, é recomendado poupar R$${liq15}, para que em um ano tenha poupado R$${liq15_1}`
+    }else{
+        div_money.innerHTML += `<br> Com a renda de R$${liq}, é recomendado obter renda extra para realizar uma poupança.`
+    }
+    }
+</script>
